@@ -1,2 +1,3 @@
 # netcracker
-Pratice Linux Ansibl
+Pratice Linux Ansible
+Ricardo Schiezaro
