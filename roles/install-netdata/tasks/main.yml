@@ -1,0 +1,37 @@
+- name: Pull Netdata Docker image
+  community.docker.docker_image:
+    name: netdata/netdata:stable
+    source: pull
+
+- name: Create Docker volumes
+  community.docker.docker_volume:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - netdatacache
+    - netdataconfig
+    - netdatalib
+
+- name: Run Netdata container
+  community.docker.docker_container:
+    name: netdata
+    image: netdata/netdata:stable
+    network_mode: host
+    pid_mode: host
+    restart_policy: unless-stopped
+    capabilities:
+      - SYS_ADMIN
+      - SYS_PTRACE
+    volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /:/host/root:ro,rslave
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /var/log:/host/var/log:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
