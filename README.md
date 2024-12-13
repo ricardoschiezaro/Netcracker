@@ -1,0 +1,2 @@
+# netcracker
+Pratice Linux Ansibl
