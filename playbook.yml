@@ -1,0 +1,7 @@
+- name: Configure Virtual Machine
+  hosts: c9.local
+  become: true
+  roles:
+    - os-configure
+    - install-netdata
+    - netdata-nginx-proxy
