@@ -2,6 +2,11 @@
   ansible.posix.selinux:
     state: disabled
 
+- name: Install Firewalld
+  yum:
+    name: firewalld
+    state: present
+
 - name: Disable and stop firewalld
   service:
     name: firewalld
@@ -24,7 +29,7 @@
     name: docker-ce
     description: Docker CE Repository
     baseurl: https://download.docker.com/linux/centos/docker-ce.repo
-
+    
 - name: Install Docker packages
   yum:
     name:
